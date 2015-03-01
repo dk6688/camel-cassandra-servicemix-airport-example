@@ -15,13 +15,11 @@ import org.junit.Test;
 import com.github.oscerd.component.cassandra.CassandraConstants;
 
 public class CassandraInsertCSVBeanTest extends CamelTestSupport{
-	
-	private String map_result = "{keywords=, gps_code=00A, municipality=Bensalem, latitude_deg=40.0708, local_code=00A, id=6523, iso_region=US-PA, home_link=, elevation_fit=11, ident=00A, wikipedia_link=, name=Total Rf Heliport, continent=NA, iata_code=, longitude_deg=-74.9336, scheduled_service=no, airport_type=heliport, iso_country=US}";
-    @Test
+    
+	@Test
     public void testInsert() throws IOException, InterruptedException {
         MockEndpoint mock = getMockEndpoint("mock:result");
         mock.expectedMessageCount(1);
-        mock.expectedHeaderReceived(CassandraConstants.CASSANDRA_INSERT_OBJECT, map_result);
      
         assertMockEndpointsSatisfied();
     }

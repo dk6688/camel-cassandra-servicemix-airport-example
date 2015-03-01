@@ -1,4 +1,4 @@
-package com.github.oscerd.camel.cassandra;
+package com.github.oscerd.camel.cassandra.data;
 
 public interface IAirportFields {
 // "id"
@@ -22,7 +22,7 @@ public interface IAirportFields {
 	
 public final String AIRPORT_ID = "id"; 
 public final String AIRPORT_IDENT = "ident"; 
-public final String AIRPORT_TYPE = "airport_type"; 
+public final String AIRPORT_TYPE = "type"; 
 public final String AIRPORT_NAME = "name"; 
 public final String AIRPORT_LAT = "latitude_deg"; 
 public final String AIRPORT_LONG = "longitude_deg"; 
