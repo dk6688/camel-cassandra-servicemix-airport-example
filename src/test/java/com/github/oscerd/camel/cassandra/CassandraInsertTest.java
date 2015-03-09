@@ -71,7 +71,6 @@ public class CassandraInsertTest extends CassandraBaseTest{
                     .beanRef("csvBean","prepareForInsert")
                     .setHeader(CassandraConstants.CASSANDRA_CONTACT_POINTS, constant(collAddr))
                     .to("cassandra:cassandraConnection?keyspace=simplex&table=airport&operation=insert")
-                    .to("log:insert result ${body}")
                     .to("mock:result");
             }
         };
