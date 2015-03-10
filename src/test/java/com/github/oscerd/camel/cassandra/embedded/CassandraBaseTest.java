@@ -79,7 +79,7 @@ public class CassandraBaseTest extends CamelTestSupport {
         session.execute("CREATE TABLE IF NOT EXISTS simplex.airport ("
                         + "id int PRIMARY KEY," + "ident text," + "type text,"
                         + "name text," + "latitude_deg float," + "longitude_deg float," 
-                        + "elevation_fit int," + "continent text," + "iso_country text," 
+                        + "elevation_ft int," + "continent text," + "iso_country text," 
                         + "iso_region text," + "municipality text," + "scheduled_service text," 
                         + "gps_code text," + "iata_code text," + "local_code text," 
                         + "home_link text," + "wikipedia_link text," + "keywords text," + ");");

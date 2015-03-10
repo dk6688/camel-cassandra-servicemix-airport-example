@@ -19,7 +19,9 @@ public class CassandraInsertCSVCamelBean {
 		insertObject.put(IAirportFields.AIRPORT_NAME, data.get(3));
 		insertObject.put(IAirportFields.AIRPORT_LAT, Float.parseFloat(data.get(4)));
 		insertObject.put(IAirportFields.AIRPORT_LONG, Float.parseFloat(data.get(5)));
+		if (data.get(6) != null && !"".equals(data.get(6))){
 		insertObject.put(IAirportFields.AIRPORT_ELEVATION, Integer.parseInt(data.get(6)));
+		}
 		insertObject.put(IAirportFields.AIRPORT_CONTINENT, data.get(7));
 		insertObject.put(IAirportFields.AIRPORT_ISO_COUNTRY, data.get(8));
 		insertObject.put(IAirportFields.AIRPORT_ISO_REGION, data.get(9));
