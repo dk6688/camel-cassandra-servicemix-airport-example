@@ -21,7 +21,7 @@ import com.datastax.driver.core.querybuilder.Select.Where;
 import com.github.oscerd.camel.cassandra.embedded.CassandraBaseTest;
 import com.github.oscerd.component.cassandra.CassandraConstants;
 
-public class CassandraInsertKoTest extends CassandraBaseTest{
+public class CassandraInsertNumberFormatTest extends CassandraBaseTest{
     
 	@Test
     public void testInsert() throws IOException, InterruptedException {

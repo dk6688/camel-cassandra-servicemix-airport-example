@@ -13,14 +13,20 @@ public class CassandraInsertCSVCamelBean {
 	public void prepareForInsert(Exchange exchange) throws Exception {
 		List<String> data = (List<String>) exchange.getIn().getBody();
 		HashMap<String, Object> insertObject = new HashMap<String, Object>();
-		insertObject.put(IAirportFields.AIRPORT_ID, Integer.parseInt(data.get(0)));
+		if (data.get(0) != null && !"".equals(data.get(0))){
+			insertObject.put(IAirportFields.AIRPORT_ID, Integer.parseInt(data.get(0)));
+		}
 		insertObject.put(IAirportFields.AIRPORT_IDENT, data.get(1));
 		insertObject.put(IAirportFields.AIRPORT_TYPE, data.get(2));
 		insertObject.put(IAirportFields.AIRPORT_NAME, data.get(3));
-		insertObject.put(IAirportFields.AIRPORT_LAT, Float.parseFloat(data.get(4)));
-		insertObject.put(IAirportFields.AIRPORT_LONG, Float.parseFloat(data.get(5)));
+		if (data.get(4) != null && !"".equals(data.get(4))){
+			insertObject.put(IAirportFields.AIRPORT_LAT, Float.parseFloat(data.get(4)));
+		}
+		if (data.get(5) != null && !"".equals(data.get(5))){
+			insertObject.put(IAirportFields.AIRPORT_LONG, Float.parseFloat(data.get(5)));
+		}
 		if (data.get(6) != null && !"".equals(data.get(6))){
-		insertObject.put(IAirportFields.AIRPORT_ELEVATION, Integer.parseInt(data.get(6)));
+			insertObject.put(IAirportFields.AIRPORT_ELEVATION, Integer.parseInt(data.get(6)));
 		}
 		insertObject.put(IAirportFields.AIRPORT_CONTINENT, data.get(7));
 		insertObject.put(IAirportFields.AIRPORT_ISO_COUNTRY, data.get(8));
