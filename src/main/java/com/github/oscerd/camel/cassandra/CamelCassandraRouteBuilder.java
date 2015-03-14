@@ -40,7 +40,7 @@ public class CamelCassandraRouteBuilder extends RouteBuilder {
 					.when(header("CamelSplitIndex").isGreaterThan(0))
 					.log(LoggingLevel.INFO, "Unmarshal della riga corrente: ${body}")
 					.unmarshal(csv)
-					.bean(new CassandraInsertCSVCamelBean(), "prepareForInsert")
+					.beanRef("cassandraCsvInsertBean", "prepareForInsert")
 					.setHeader(CassandraConstants.CASSANDRA_CONTACT_POINTS, constant(collAddr))
 					.log(LoggingLevel.INFO, "Inserimento dati riga corrente nel database")
 					.to("cassandra:cassandraConnection?keyspace=simplex&table=airport&operation=insert")
