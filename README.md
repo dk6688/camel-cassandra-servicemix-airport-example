@@ -324,4 +324,4 @@ You should see something like this:
 
 # The route
 
-This route executes 46240 insert on Apache Cassandra airport table on the simplex keyspace.
+This route executes 46240 inserts on Apache Cassandra airport table on the simplex keyspace.
