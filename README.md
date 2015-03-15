@@ -131,6 +131,8 @@ mvn clean package
 
 ```
 
+- __During the execution of tests in mvn clean package command, be sure your local Apache Cassandra instance is not running__
+
 - Turn back to Servicemix console and executes this instruction:
 
 ```shell
