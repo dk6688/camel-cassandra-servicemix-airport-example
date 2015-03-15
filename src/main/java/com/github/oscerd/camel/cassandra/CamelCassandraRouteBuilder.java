@@ -6,9 +6,11 @@ import java.util.List;
 import org.apache.camel.Exchange;
 import org.apache.camel.LoggingLevel;
 import org.apache.camel.builder.RouteBuilder;
+import org.apache.camel.component.properties.PropertiesComponent;
 import org.apache.camel.dataformat.csv.CsvDataFormat;
 import org.apache.camel.processor.aggregate.AggregationStrategy;
 
+import com.github.oscerd.camel.cassandra.data.IRouteConstants;
 import com.github.oscerd.component.cassandra.CassandraConstants;
 
 /**
@@ -24,25 +26,27 @@ public class CamelCassandraRouteBuilder extends RouteBuilder {
 		collAddr.add(addr);
 		CsvDataFormat csv = new CsvDataFormat();
 		csv.setDelimiter(",");
+        PropertiesComponent pc = getContext().getComponent("properties", PropertiesComponent.class);
+        pc.setLocation("classpath:airport_route.properties");
 
-		from("file:///tmp/in/")
-				.setProperty("righeProcessate", constant(0))
+		from("file://{{airport.in.directory}}")
+				.setProperty(IRouteConstants.PROCESSED_ROWS, constant(0))
 				.split(body().tokenize("\n"), new SplitterSizeStrategy())
 				.stopOnException()
 				.streaming()
 				.choice()
 					// skip first line
 					.when(header("CamelSplitIndex").isEqualTo(0))
-					.log(LoggingLevel.INFO, "Si salta la prima riga di intestazione")
+					.log(LoggingLevel.INFO, "Skipping first line")
 					// end choice
 				.end()
 				.choice()
 					.when(header("CamelSplitIndex").isGreaterThan(0))
-					.log(LoggingLevel.INFO, "Unmarshal della riga corrente: ${body}")
+					.log(LoggingLevel.INFO, "Unmarshalling current row: ${body}")
 					.unmarshal(csv)
 					.beanRef("cassandraCsvInsertBean", "prepareForInsert")
 					.setHeader(CassandraConstants.CASSANDRA_CONTACT_POINTS, constant(collAddr))
-					.log(LoggingLevel.INFO, "Inserimento dati riga corrente nel database")
+					.log(LoggingLevel.INFO, "Inserting current row in Apache Cassandra")
 					.to("cassandra:cassandraConnection?keyspace=simplex&table=airport&operation=insert")
 				// end choice
 				.end()
@@ -59,12 +63,12 @@ public class CamelCassandraRouteBuilder extends RouteBuilder {
 		@Override
 		public Exchange aggregate(Exchange oldExchange, Exchange newExchange) {
 			if (oldExchange == null) {
-				newExchange.setProperty("righeProcessate", 1);
+				newExchange.setProperty(IRouteConstants.PROCESSED_ROWS, 1);
 				return newExchange;
 			}
 			Integer num = (Integer) newExchange.getProperty("CamelSplitSize");
 			if (num != null) {
-				oldExchange.setProperty("righeProcessate", num);
+				oldExchange.setProperty(IRouteConstants.PROCESSED_ROWS, num);
 			}
 
 			return oldExchange;
