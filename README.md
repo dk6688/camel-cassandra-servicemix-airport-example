@@ -37,11 +37,11 @@ SOURCE 'populateAirport.cql'
 
 # Setting up Servicemix
 
-Camel-Cassandra component is based on camel-core 2.14.1 release. So we need to use an Apache Servicemix version based on this release.
+Camel-Cassandra component is based on camel-core 2.15.2 release. So we need to use an Apache Servicemix version based on this release.
 
-The Apache Servicemix 5.4.0 is the correct release.
+The Apache Servicemix 6.0.0.M2 is the correct release.
 
-- Download the Apache Servicemix 5.4.0 package from: http://servicemix.apache.org/downloads/servicemix-5.4.0.html
+- Download the Apache Servicemix 6.0.0.M2 package from: http://servicemix.apache.org/downloads/servicemix-6.0.0.M2.html
 
 - Unzip the package in a directory (we denote this folder with $SERVICEMIX_HOME)
 
@@ -53,7 +53,7 @@ The Apache Servicemix 5.4.0 is the correct release.
 
 ```shell
 
-karaf@root> osgi:install -s mvn:com.google.guava/guava/14.0.1
+karaf@root> install -s mvn:com.google.guava/guava/14.0.1
 
 ```
 
@@ -61,15 +61,55 @@ karaf@root> osgi:install -s mvn:com.google.guava/guava/14.0.1
 
 ```shell
 
-karaf@root> osgi:install -s mvn:com.codahale.metrics/metrics-core/3.0.2
+karaf@root> install -s mvn:com.codahale.metrics/metrics-core/3.0.2
 
 ```
 
-- __Install Netty Bundle__
+- __Install Netty Common Bundle__
 
 ```shell
 
-karaf@root> osgi:install -s mvn:io.netty/netty/3.9.0.Final
+karaf@root> install -s mvn:io.netty/netty-common/4.0.27.Final
+
+```
+
+- __Install Netty Buffer Bundle__
+
+```shell
+
+karaf@root> install -s mvn:io.netty/netty-buffer/4.0.27.Final
+
+```
+
+- __Install Netty Transport Bundle__
+
+```shell
+
+karaf@root> install -s mvn:io.netty/netty-transport/4.0.27.Final
+
+```
+
+- __Install Netty Codec Bundle__
+
+```shell
+
+karaf@root> install -s mvn:io.netty/netty-codec/4.0.27.Final
+
+```
+
+- __Install Netty Transport Native Epoll Bundle__
+
+```shell
+
+karaf@root> install -s mvn:io.netty/netty-handler/4.0.27.Final
+
+```
+
+- __Install Netty Handler Bundle__
+
+```shell
+
+karaf@root> install -s mvn:io.netty/netty-transport-native-epoll/4.0.27.Final
 
 ```
 
@@ -77,7 +117,7 @@ karaf@root> osgi:install -s mvn:io.netty/netty/3.9.0.Final
 
 ```shell
 
-karaf@root> osgi:install -s mvn:net.jpountz.lz4/lz4/1.2.0
+karaf@root> install -s mvn:net.jpountz.lz4/lz4/1.2.0
 
 ```
 
@@ -85,7 +125,7 @@ karaf@root> osgi:install -s mvn:net.jpountz.lz4/lz4/1.2.0
 
 ```shell
 
-karaf@root> osgi:install -s mvn:org.xerial.snappy/snappy-java/1.0.4
+karaf@root> install -s mvn:org.xerial.snappy/snappy-java/1.0.4
 
 ```
 
@@ -93,15 +133,7 @@ karaf@root> osgi:install -s mvn:org.xerial.snappy/snappy-java/1.0.4
 
 ```shell
 
-karaf@root> osgi:install -s mvn:com.datastax.cassandra/cassandra-driver-core/2.1.3
-
-```
-
-- __Install Feature camel-csv__
-
-```shell
-
-karaf@root> features:install camel-csv
+karaf@root> install -s mvn:com.datastax.cassandra/cassandra-driver-core/2.1.6
 
 ```
 
@@ -109,7 +141,7 @@ karaf@root> features:install camel-csv
 
 ```shell
 
-karaf@root> osgi:install -s mvn:com.github.oscerd/camel-cassandra/1.1.0
+karaf@root> install -s mvn:com.github.oscerd/camel-cassandra/1.2.0
 
 ```
 
@@ -178,21 +210,22 @@ You should see something like this:
 
 ```shell
 
-2015-03-14 12:04:47,223 | INFO  | l Console Thread | ultOsgiApplicationContextCreator | ?                                   ? | 122 - org.springframework.osgi.extender - 1.2.1 | Discovered configurations {osgibundle:/META-INF/spring/*.xml} in bundle [Camel Cassandra Servicemix Aiport Route Example (com.github.oscerd.camel-cassandra-servicemix-airport-example)]
-2015-03-14 12:04:47,225 | INFO  | ExtenderThread-9 | OsgiBundleXmlApplicationContext  | ?                                   ? | 79 - org.apache.servicemix.bundles.spring-context - 3.2.11.RELEASE_1 | Refreshing OsgiBundleXmlApplicationContext(bundle=com.github.oscerd.camel-cassandra-servicemix-airport-example, config=osgibundle:/META-INF/spring/*.xml): startup date [Sat Mar 14 12:04:47 CET 2015]; root of context hierarchy
-2015-03-14 12:04:47,226 | INFO  | ExtenderThread-9 | OsgiBundleXmlApplicationContext  | ?                                   ? | 79 - org.apache.servicemix.bundles.spring-context - 3.2.11.RELEASE_1 | Application Context service already unpublished
-2015-03-14 12:04:47,228 | INFO  | ExtenderThread-9 | XmlBeanDefinitionReader          | ?                                   ? | 77 - org.apache.servicemix.bundles.spring-beans - 3.2.11.RELEASE_1 | Loading XML bean definitions from URL [bundle://267.0:0/META-INF/spring/camel-context.xml]
-2015-03-14 12:04:47,293 | INFO  | ExtenderThread-9 | WaiterApplicationContextExecutor | ?                                   ? | 122 - org.springframework.osgi.extender - 1.2.1 | No outstanding OSGi service dependencies, completing initialization for OsgiBundleXmlApplicationContext(bundle=com.github.oscerd.camel-cassandra-servicemix-airport-example, config=osgibundle:/META-INF/spring/*.xml)
-2015-03-14 12:04:47,298 | INFO  | xtenderThread-10 | DefaultListableBeanFactory       | ?                                   ? | 77 - org.apache.servicemix.bundles.spring-beans - 3.2.11.RELEASE_1 | Pre-instantiating singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@49084634: defining beans [camel1:beanPostProcessor,camel1,camelCassandraBuilder,cassandraCsvInsertBean]; root of factory hierarchy
-2015-03-14 12:04:47,328 | INFO  | xtenderThread-10 | OsgiSpringCamelContext           | ?                                   ? | 116 - org.apache.camel.camel-core - 2.14.1 | Apache Camel 2.14.1 (CamelContext: camel1) is starting
-2015-03-14 12:04:47,328 | INFO  | xtenderThread-10 | ManagedManagementStrategy        | ?                                   ? | 116 - org.apache.camel.camel-core - 2.14.1 | JMX is enabled
-2015-03-14 12:04:47,380 | INFO  | xtenderThread-10 | OsgiSpringCamelContext           | ?                                   ? | 116 - org.apache.camel.camel-core - 2.14.1 | AllowUseOriginalMessage is enabled. If access to the original message is not needed, then its recommended to turn this option off as it may improve performance.
-2015-03-14 12:04:47,381 | INFO  | xtenderThread-10 | OsgiSpringCamelContext           | ?                                   ? | 116 - org.apache.camel.camel-core - 2.14.1 | StreamCaching is not in use. If using streams then its recommended to enable stream caching. See more details at http://camel.apache.org/stream-caching.html
-2015-03-14 12:04:47,406 | INFO  | xtenderThread-10 | OsgiSpringCamelContext           | ?                                   ? | 116 - org.apache.camel.camel-core - 2.14.1 | Route: route5 started and consuming from: Endpoint[file:///tmp/in/]
-2015-03-14 12:04:47,406 | INFO  | xtenderThread-10 | OsgiSpringCamelContext           | ?                                   ? | 116 - org.apache.camel.camel-core - 2.14.1 | Total 1 routes, of which 1 is started.
-2015-03-14 12:04:47,406 | INFO  | xtenderThread-10 | OsgiSpringCamelContext           | ?                                   ? | 116 - org.apache.camel.camel-core - 2.14.1 | Apache Camel 2.14.1 (CamelContext: camel1) started in 0.078 seconds
-2015-03-14 12:04:47,407 | INFO  | xtenderThread-10 | OsgiBundleXmlApplicationContext  | ?                                   ? | 79 - org.apache.servicemix.bundles.spring-context - 3.2.11.RELEASE_1 | Publishing application context as OSGi service with properties {org.springframework.context.service.name=com.github.oscerd.camel-cassandra-servicemix-airport-example, Bundle-SymbolicName=com.github.oscerd.camel-cassandra-servicemix-airport-example, Bundle-Version=1.0.0.SNAPSHOT}
-2015-03-14 12:04:47,410 | INFO  | xtenderThread-10 | ContextLoaderListener            | ?                                   ? | 122 - org.springframework.osgi.extender - 1.2.1 | Application context successfully refreshed (OsgiBundleXmlApplicationContext(bundle=com.github.oscerd.camel-cassandra-servicemix-airport-example, config=osgibundle:/META-INF/spring/*.xml))
+2015-06-06 19:45:19,836 | INFO  | l for user karaf | ultOsgiApplicationContextCreator | 106 - org.springframework.osgi.extender - 1.2.1 | Discovered configurations {osgibundle:/META-INF/spring/*.xml} in bundle [Camel Cassandra Servicemix Aiport Route Example (com.github.oscerd.camel-cassandra-servicemix-airport-example)]
+2015-06-06 19:45:19,843 | INFO  | ExtenderThread-1 | OsgiBundleXmlApplicationContext  | 101 - org.apache.servicemix.bundles.spring-context - 3.2.11.RELEASE_1 | Refreshing OsgiBundleXmlApplicationContext(bundle=com.github.oscerd.camel-cassandra-servicemix-airport-example, config=osgibundle:/META-INF/spring/*.xml): startup date [Sat Jun 06 19:45:19 CEST 2015]; root of context hierarchy
+2015-06-06 19:45:19,845 | INFO  | ExtenderThread-1 | OsgiBundleXmlApplicationContext  | 101 - org.apache.servicemix.bundles.spring-context - 3.2.11.RELEASE_1 | Application Context service already unpublished
+2015-06-06 19:45:19,849 | INFO  | ExtenderThread-1 | XmlBeanDefinitionReader          | 99 - org.apache.servicemix.bundles.spring-beans - 3.2.11.RELEASE_1 | Loading XML bean definitions from URL [bundle://252.0:0/META-INF/spring/camel-context.xml]
+2015-06-06 19:45:19,993 | INFO  | ExtenderThread-1 | CamelNamespaceHandler            | 117 - org.apache.camel.camel-spring - 2.15.2 | OSGi environment detected.
+2015-06-06 19:45:20,505 | INFO  | ExtenderThread-1 | WaiterApplicationContextExecutor | 106 - org.springframework.osgi.extender - 1.2.1 | No outstanding OSGi service dependencies, completing initialization for OsgiBundleXmlApplicationContext(bundle=com.github.oscerd.camel-cassandra-servicemix-airport-example, config=osgibundle:/META-INF/spring/*.xml)
+2015-06-06 19:45:20,513 | INFO  | ExtenderThread-2 | DefaultListableBeanFactory       | 99 - org.apache.servicemix.bundles.spring-beans - 3.2.11.RELEASE_1 | Pre-instantiating singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@19af3bb9: defining beans [template,consumerTemplate,camel1:beanPostProcessor,camel1,camelCassandraBuilder,cassandraCsvInsertBean]; root of factory hierarchy
+2015-06-06 19:45:20,767 | INFO  | ExtenderThread-2 | OsgiSpringCamelContext           | 113 - org.apache.camel.camel-core - 2.15.2 | Apache Camel 2.15.2 (CamelContext: camel1) is starting
+2015-06-06 19:45:20,768 | INFO  | ExtenderThread-2 | ManagedManagementStrategy        | 113 - org.apache.camel.camel-core - 2.15.2 | JMX is enabled
+2015-06-06 19:45:20,943 | INFO  | ExtenderThread-2 | OsgiSpringCamelContext           | 113 - org.apache.camel.camel-core - 2.15.2 | AllowUseOriginalMessage is enabled. If access to the original message is not needed, then its recommended to turn this option off as it may improve performance.
+2015-06-06 19:45:20,943 | INFO  | ExtenderThread-2 | OsgiSpringCamelContext           | 113 - org.apache.camel.camel-core - 2.15.2 | StreamCaching is not in use. If using streams then its recommended to enable stream caching. See more details at http://camel.apache.org/stream-caching.html
+2015-06-06 19:45:21,000 | INFO  | ExtenderThread-2 | OsgiSpringCamelContext           | 113 - org.apache.camel.camel-core - 2.15.2 | Route: route1 started and consuming from: Endpoint[file:///tmp/in/]
+2015-06-06 19:45:21,000 | INFO  | ExtenderThread-2 | OsgiSpringCamelContext           | 113 - org.apache.camel.camel-core - 2.15.2 | Total 1 routes, of which 1 is started.
+2015-06-06 19:45:21,001 | INFO  | ExtenderThread-2 | OsgiSpringCamelContext           | 113 - org.apache.camel.camel-core - 2.15.2 | Apache Camel 2.15.2 (CamelContext: camel1) started in 0.233 seconds
+2015-06-06 19:45:21,002 | INFO  | ExtenderThread-2 | OsgiBundleXmlApplicationContext  | 101 - org.apache.servicemix.bundles.spring-context - 3.2.11.RELEASE_1 | Publishing application context as OSGi service with properties {org.springframework.context.service.name=com.github.oscerd.camel-cassandra-servicemix-airport-example, Bundle-SymbolicName=com.github.oscerd.camel-cassandra-servicemix-airport-example, Bundle-Version=1.0.0.SNAPSHOT}
+2015-06-06 19:45:21,009 | INFO  | ExtenderThread-2 | ContextLoaderListener            | 106 - org.springframework.osgi.extender - 1.2.1 | Application context successfully refreshed (OsgiBundleXmlApplicationContext(bundle=com.github.oscerd.camel-cassandra-servicemix-airport-example, config=osgibundle:/META-INF/spring/*.xml))
 
 ```
 

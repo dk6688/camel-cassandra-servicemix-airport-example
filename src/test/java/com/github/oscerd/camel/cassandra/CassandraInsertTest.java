@@ -63,7 +63,7 @@ public class CassandraInsertTest extends CassandraBaseTest {
 	protected RouteBuilder createRouteBuilder() throws Exception {
 
 		final CsvDataFormat csv = new CsvDataFormat();
-		csv.setDelimiter(",");
+		csv.setDelimiter(',');
 		String addr = "127.0.0.1";
 		final List<String> collAddr = new ArrayList<String>();
 		collAddr.add(addr);

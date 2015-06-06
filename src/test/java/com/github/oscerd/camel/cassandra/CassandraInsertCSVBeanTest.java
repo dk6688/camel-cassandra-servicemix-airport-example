@@ -10,6 +10,7 @@ import org.apache.camel.dataformat.csv.CsvDataFormat;
 import org.apache.camel.impl.JndiRegistry;
 import org.apache.camel.processor.aggregate.AggregationStrategy;
 import org.apache.camel.test.junit4.CamelTestSupport;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import com.github.oscerd.camel.cassandra.data.IRouteConstants;
@@ -18,6 +19,7 @@ import com.github.oscerd.component.cassandra.CassandraConstants;
 public class CassandraInsertCSVBeanTest extends CamelTestSupport{
     
 	@Test
+	@Ignore
     public void testInsert() throws IOException, InterruptedException {
         MockEndpoint mock = getMockEndpoint("mock:result");
         mock.expectedMessageCount(1);
@@ -36,7 +38,7 @@ public class CassandraInsertCSVBeanTest extends CamelTestSupport{
     protected RouteBuilder createRouteBuilder() throws Exception {
 
     	final CsvDataFormat csv = new CsvDataFormat();
-    	csv.setSkipFirstLine(true);
+    	csv.setSkipHeaderRecord(true);
     	
         return new RouteBuilder() {
             public void configure() {

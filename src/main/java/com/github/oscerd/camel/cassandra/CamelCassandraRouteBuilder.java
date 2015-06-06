@@ -25,7 +25,7 @@ public class CamelCassandraRouteBuilder extends RouteBuilder {
 		List<String> collAddr = new ArrayList<String>();
 		collAddr.add(addr);
 		CsvDataFormat csv = new CsvDataFormat();
-		csv.setDelimiter(",");
+		csv.setDelimiter(',');
         PropertiesComponent pc = getContext().getComponent("properties", PropertiesComponent.class);
         pc.setLocation("classpath:airport_route.properties");
 
